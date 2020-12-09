@@ -97,4 +97,29 @@ class HouseTest < Minitest::Test
     sorted_room_array = [room_4, room_3, room_2, room_1]
     assert_equal sorted_room_array, house.rooms_sorted_by_area
   end
+
+  def test_rooms_by_category
+    room_1 = Room.new(:bedroom, 10, '13')
+    room_2 = Room.new(:bedroom, 11, '15')
+    room_3 = Room.new(:living_room, 25, '15')
+    room_4 = Room.new(:basement, 30, '41')
+    room_array = [room_2, room_1, room_4, room_3]
+    house = House.new("$400000", "123 sugar lane")
+
+    room_array.each do |room|
+      house.add_room(room)
+    end
+
+    expected_bedrooms = @house.rooms_from_category(:bedroom)
+    expected_living_rooms = @house.rooms_from_category(:living_room)
+    expected_basements = @house.rooms_from_category(:basement)
+
+    actual_bedrooms = house.rooms_by_category[:bedroom]
+    assert_includes actual_bedrooms, room_1
+    assert_includes actual_bedrooms, room_2
+
+    # TODO this line is failing, and I'm out of time to work on it
+    assert_equal expected_living_rooms, house.rooms_by_category[:living_room]
+    assert_equal expected_basements, house.rooms_by_category[:basement]
+  end
 end

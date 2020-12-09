@@ -23,6 +23,15 @@ class House
     end
   end
 
+  def rooms_by_category
+    categorized_rooms = Hash.new
+    room_categories.each do |category|
+      categorized_rooms[category] = rooms_from_category(category)
+    end
+
+    categorized_rooms
+  end
+
   def area
     area = 0
     @rooms.each do |room|
@@ -52,5 +61,15 @@ class House
   def price_integer
     # Dangerously assuming price is formatted like "$123456"
     price[1..price.length - 1].to_i
+  end
+
+  def room_categories
+    categories = []
+
+    @rooms.each do |room|
+      categories << room.category unless categories.include? room.category
+    end
+
+    categories
   end
 end
