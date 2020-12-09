@@ -12,4 +12,15 @@ class House
   def add_room(room)
     @rooms << room
   end
+
+  def above_market_average?
+    price_integer > 500000
+  end
+
+  private
+
+  def price_integer
+    # Dangerously assuming price is formatted like "$123456"
+    price[1..price.length - 1].to_i
+  end
 end

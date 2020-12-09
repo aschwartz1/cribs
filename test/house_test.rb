@@ -30,4 +30,25 @@ class HouseTest < Minitest::Test
     @house.add_room(@room_2)
     assert_equal room_array, @house.rooms
   end
+
+  def test_above_market_average_false
+    assert_equal false, @house.above_market_average?
+  end
+
+  def test_above_market_average_true
+    expensive_house = House.new("$999999", "1 Baller Ln")
+    assert_equal true, expensive_house.above_market_average?
+  end
+
+  def test_rooms_from_category
+
+  end
+
+  def test_area
+    skip
+  end
+
+  def test_details
+    skip
+  end
 end
