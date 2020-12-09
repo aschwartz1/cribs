@@ -17,6 +17,28 @@ class House
     price_integer > 500000
   end
 
+  def rooms_from_category(category)
+    @rooms.select do |room|
+      room.category == category
+    end
+  end
+
+  def area
+    area = 0
+    @rooms.each do |room|
+      area += room.area
+    end
+
+    area
+  end
+
+  def details
+    {
+      "price" => price_integer,
+      "address" => @address
+    }
+  end
+
   private
 
   def price_integer

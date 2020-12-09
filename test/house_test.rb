@@ -6,8 +6,8 @@ require './lib/house'
 class HouseTest < Minitest::Test
   def setup
     @house = House.new("$100000", "123 Main St")
-    @room_1 = Room.new(:bedroom, 10, '13')
-    @room_2 = Room.new(:bedroom, 11, '15')
+    @bedroom = Room.new(:bedroom, 10, '13')
+    @basement = Room.new(:basement, 11, '15')
   end
 
   def test_it_exists
@@ -20,14 +20,14 @@ class HouseTest < Minitest::Test
   end
 
   def test_add_room
-    @house.add_room(@room_1)
-    assert_equal @room_1, @house.rooms.first
+    @house.add_room(@bedroom)
+    assert_equal @bedroom, @house.rooms.first
   end
 
   def test_it_has_rooms
-    room_array = [@room_1, @room_2]
-    @house.add_room(@room_1)
-    @house.add_room(@room_2)
+    room_array = [@bedroom, @basement]
+    @house.add_room(@bedroom)
+    @house.add_room(@basement)
     assert_equal room_array, @house.rooms
   end
 
@@ -41,14 +41,29 @@ class HouseTest < Minitest::Test
   end
 
   def test_rooms_from_category
+    @house.add_room(@bedroom)
+    @house.add_room(@basement)
 
+    bedrooms = [@bedroom]
+    basements = [@basement]
+    assert_equal bedrooms, @house.rooms_from_category(:bedroom)
+    assert_equal basements, @house.rooms_from_category(:basement)
   end
 
   def test_area
-    skip
+    expected_area = 295
+    @house.add_room(@bedroom)
+    @house.add_room(@basement)
+    assert_equal expected_area, @house.area
   end
 
   def test_details
-    skip
+    details = {
+      "price" => 100000,
+      "address" => "123 Main St"
+    }
+
+    assert_equal details["price"], @house.details["price"]
+    assert_equal details["address"], @house.details["address"]
   end
 end
