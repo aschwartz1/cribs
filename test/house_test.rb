@@ -66,4 +66,19 @@ class HouseTest < Minitest::Test
     assert_equal details["price"], @house.details["price"]
     assert_equal details["address"], @house.details["address"]
   end
+
+  def test_price_per_square_foot
+    room_1 = Room.new(:bedroom, 10, '13')
+    room_2 = Room.new(:bedroom, 11, '15')
+    room_3 = Room.new(:living_room, 25, '15')
+    room_4 = Room.new(:basement, 30, '41')
+    room_array = [room_1, room_2, room_3, room_4]
+    house = House.new("$400000", "123 sugar lane")
+
+    room_array.each do |room|
+      house.add_room(room)
+    end
+
+    assert_equal 210.53, house.price_per_square_foot
+  end
 end
